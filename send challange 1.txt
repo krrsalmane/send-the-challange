@@ -1,0 +1,102 @@
+#include <stdio.h>
+
+#define MAX_PERSONNES 10
+
+struct Personne {
+    char nom[100];
+    int age;
+    char rue[100], ville[100], code_postal[20];
+};
+
+struct Personne personnes[MAX_PERSONNES];
+int nombre_personnes = 0;
+
+void creer_personne() {
+    if (nombre_personnes >= MAX_PERSONNES) {
+        printf("Capacité maximale atteinte.\n");
+        return;
+    }
+
+    printf("Nom: ");
+    scanf("%s", personnes[nombre_personnes].nom);
+    printf("Age: ");
+    scanf("%d", &personnes[nombre_personnes].age);
+    printf("Rue: ");
+    scanf("%s", personnes[nombre_personnes].rue);
+    printf("Ville: ");
+    scanf("%s", personnes[nombre_personnes].ville);
+    printf("Code Postal: ");
+    scanf("%s", personnes[nombre_personnes].code_postal);
+
+    nombre_personnes++;
+}
+
+void afficher_personnes() {
+    if (nombre_personnes == 0) {
+        printf("Aucune personne enregistrée.\n");
+        return;
+    }
+    for (int i = 0; i < nombre_personnes; i++) {
+        printf("%d: %s, Age: %d, %s, %s, %s\n",
+            i + 1, personnes[i].nom, personnes[i].age,
+            personnes[i].rue, personnes[i].ville, personnes[i].code_postal);
+    }
+}
+
+void mettre_a_jour_personne() {
+    int index;
+    printf("Numéro à modifier: ");
+    scanf("%d", &index);
+    index--;  // zero-based index
+
+    if (index < 0 || index >= nombre_personnes) {
+        printf("Numéro invalide.\n");
+        return;
+    }
+
+    printf("Nouveau nom: ");
+    scanf("%s", personnes[index].nom);
+    printf("Nouvel âge: ");
+    scanf("%d", &personnes[index].age);
+    printf("Nouvelle rue: ");
+    scanf("%s", personnes[index].rue);
+    printf("Nouvelle ville: ");
+    scanf("%s", personnes[index].ville);
+    printf("Nouveau code postal: ");
+    scanf("%s", personnes[index].code_postal);
+}
+
+void supprimer_personne() {
+    int index;
+    printf("Numéro à supprimer: ");
+    scanf("%d", &index);
+    index--;  // zero-based index
+
+    if (index < 0 || index >= nombre_personnes) {
+        printf("Numéro invalide.\n");
+        return;
+    }
+    
+    for (int i = index; i < nombre_personnes - 1; i++) {
+        personnes[i] = personnes[i + 1];
+    }
+    nombre_personnes--;
+    printf("Personne supprimée.\n");
+}
+
+int main() {
+    int choix;
+    do {
+        printf("\nMenu:\n1. Créer\n2. Afficher\n3. Modifier\n4. Supprimer\n5. Quitter\nChoix: ");
+        scanf("%d", &choix);
+
+        if (choix == 1) creer_personne();
+        else if (choix == 2) afficher_personnes();
+        else if (choix == 3) mettre_a_jour_personne();
+        else if (choix == 4) supprimer_personne();
+        else if (choix = 5) printf("Choix invalide.\n");
+
+    } while (choix = 5);
+
+    return 0;
+}
